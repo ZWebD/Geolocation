@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="//maps.googleapis.com/maps/api/js?key=API_KEY"></script>
+    <!--
+    -->
+    <script src="//maps.googleapis.com/maps/api/js?key=API_KEY"></script> 
     <title>Geolocation</title>
 </head>
 <body>
     <p id="msg" style="width: 450px; height: 50px;"></p>
+    <!-- 
+        <iframe id="imap" title="here" width="600" height="450" style="border:0;" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" src=""></iframe>
+    -->    
     <p id="map" style="width: 450px; height: 200px;"></p>
 
     <script>
@@ -25,15 +30,23 @@
         function fail(position) {
             document.getElementById("msg").innerText = "Geolocation service cannot find you at this time."
         }
-
+        console.log("hello");
         function success(position) {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
             document.getElementById("msg").innerHTML = "Found you at...<br>Latitude: "+ lat + ", Longitude: " + lng;
-            const latlng = new google.maps.LatLng(lat,lng);
-            const options = { zoom: 18, center : latlng , mapTypeId: google.maps.MapTypeId.ROADMAP}
-            const map = new google.maps.Map(document.getElementById("map") , options );
-            const marker = new google.maps.Marker({position: latlng , map: map, title: "You are here"});
+
+            /* Changed ti iFrame instead of using Google API, but X-Frame-Options "DENY" !!! 
+            //let iSrc = 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10079.91625811389!2d-' + lng + '!3d' + lat + '!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4875850af723317f%3A0x5256b3d81576e2d5!2s!5e0!3m2!1sen!2suk!4v1635946803426!5m2!1sen!2suk';
+            let iSrc = 'https://maps.google.com/maps?hl=en&amp;q='+ lat +','+ lng +'+(here)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed';
+            document.getElementById("imap").setAttribute("src", iSrc);
+            */
+           
+           const latlng = new google.maps.LatLng(lat,lng);
+           const options = { zoom: 18, center : latlng , mapTypeId: google.maps.MapTypeId.ROADMAP}
+           const map = new google.maps.Map(document.getElementById("map") , options );
+           const marker = new google.maps.Marker({position: latlng , map: map, title: "You are here"});
+            
         }
     </script>
 </body>
